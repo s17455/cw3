@@ -20,7 +20,7 @@ namespace CW3
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            services.AddSingleton<IDbService, MockDbService>();
+            services.AddSingleton<IDbService, MSSqlDbService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -17,44 +17,55 @@ namespace CW3.Controllers
         }
 
         [HttpGet]
-        public string GetStudent(string orderBy)
+        public IActionResult GetStudents(string orderBy)
         {
-            return $"Malewski, Andrzejewski, Kowalski sortowanie={orderBy}";
+            return Ok(_dbService.GetStudents(orderBy));
         }
-        
-        [HttpGet("{id}")]
-        public IActionResult GetStudent(int id)
+
+        [HttpGet("{indexNumber}")]
+        public IActionResult GetStudent(string indexNumber)
         {
-            switch (id)
-            {
-                case 1:
-                    return Ok("Kowalski");
-
-                case 2:
-                    return Ok("Malewski");
-
-                default:
-                    return NotFound("Resource with id: " + id + " not found");
-            }
+            var student = _dbService.GetStudent(indexNumber);
+            if (student != null)
+                return Ok(student);
+            else
+                return NotFound("Nie znaleziono studneta");
         }
-        
+
+        [HttpGet("{indexNumber}/enrollment")]
+        public IActionResult GetStudentEnrollment(string indexNumber)
+        {
+            var student = _dbService.GetStudentEnrollment(indexNumber);
+            if (student != null)
+                return Ok(student);
+            else
+                return NotFound("Nie znaleziono studneta");
+        }
+
         [HttpPost]
-        public IActionResult Create(Student student)
+        public IActionResult CreateStudent(Student student)
         {
-            student.IndexNumber = $"s{new Random().Next(1, 20000)}";
-            return Ok(student);
+            if (_dbService.CreateStudent(student) > 0)
+                return Ok(student);
+            return Conflict(student);
         }
 
-        [HttpPut("{id}")]
-        public IActionResult Update(int id, Student student)
+        [HttpPut("{indexNumber}")]
+        public IActionResult UpdateStudent(string indexNumber, Student student)
         {
-            return Ok("Aktualizacja zakończona");
+            if (_dbService.UpdateStudent(indexNumber, student) > 0)
+                return Ok("Aktualizacja dokończona");
+            else
+                return NotFound("Nie znaleziono studneta");
         }
 
-        [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        [HttpDelete("{indexNumber}")]
+        public IActionResult DeleteStudent(string indexNumber)
         {
-            return Ok("Usuwanie zakończone");
+            if (_dbService.DeleteStudent(indexNumber) > 0)
+                return Ok("Usuwanie ukończone");
+            else
+                return NotFound("Nie znaleziono studneta");
         }
     }
 }
