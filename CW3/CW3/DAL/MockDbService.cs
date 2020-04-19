@@ -14,13 +14,13 @@ namespace CW3.DAL
         {
             _students = new List<Student>
             {
-                new Student{IdStudent=1, FirstName="Jan", LastName="Kowalski"},
-                new Student{IdStudent=1, FirstName="Jan", LastName="Kowalski"},
-                new Student{IdStudent=1, FirstName="Jan", LastName="Kowalski"}
+                new Student{IndexNumber="s17455", FirstName="Jan", LastName="Kowalski"},
+                new Student{IndexNumber="s12131", FirstName="Jan", LastName="Kowalski"},
+                new Student{IndexNumber="s1231", FirstName="Jan", LastName="Kowalski"}
             };
         }
 
-        public IEnumerable<Student> GetStudents()
+        public IEnumerable<Student> GetStudents(string orderBy)
         {
             return _students;
         }

@@ -1,0 +1,13 @@
+﻿version: '3.5'
+
+services:
+    db:
+        image: "mcr.microsoft.com/mssql/server"
+        environment:
+            SA_PASSWORD: "Jko3va-D9821jhsvGD"
+            ACCEPT_EULA: "Y"
+        volumes:
+            - mssql-cw3:/var/opt/mssql/data
+
+volumes:
+    mssql-cw3:
